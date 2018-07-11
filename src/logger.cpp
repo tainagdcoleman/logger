@@ -72,29 +72,29 @@ Logger::Logger(bool console, string file)
 
 void Logger::log(string src, string msg, Levels severity)
 {
-  auto IO = BOOST_LOG_TRIVIAL(trace);
-
+  string message = string("From " + src + ", " + msg)
   switch(severity)
   {
+    case Levels::TRACE:
+      BOOST_LOG_TRIVIAL(trace) << message;
+      break;
     case Levels::DEBUG:
-      IO = BOOST_LOG_TRIVIAL(debug);
+      BOOST_LOG_TRIVIAL(debug) << message;
       break;
     case Levels::INFO:
-      IO = BOOST_LOG_TRIVIAL(info);
+      BOOST_LOG_TRIVIAL(info) << message;
       break;
     case Levels::WARNING:
-      IO = BOOST_LOG_TRIVIAL(warning);
+      BOOST_LOG_TRIVIAL(warning) << message;
       break;
     case Levels::ERROR:
-      IO = BOOST_LOG_TRIVIAL(error);
+      BOOST_LOG_TRIVIAL(error) << message;
       break;
     case Levels::FATAL:
-      IO = BOOST_LOG_TRIVIAL(fatal);
+      BOOST_LOG_TRIVIAL(fatal) << message;
       break;
 
   }
-
-  IO << "From " << src << ", " << msg;
 
 }
 //static methods
