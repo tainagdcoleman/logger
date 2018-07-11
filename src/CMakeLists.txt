@@ -11,6 +11,6 @@ find_package(Boost 1.58.0 REQUIRED COMPONENTS log)
 
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
-    add_executable(logger.cpp)
+    add_executable(logger logger.cpp main.cpp)
     target_link_libraries(logger ${Boost_LIBRARIES})
 endif()
