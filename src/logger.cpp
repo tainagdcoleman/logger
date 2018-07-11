@@ -100,7 +100,7 @@ void Logger::log(string src, string msg, Levels severity)
 Logger Logger::getLogger()
 {
   is_init = true;
-  static Logger logger(console, file); // constructor -- first run, gets set up, second +  it will just return (singleton)
+  static Logger logger; // constructor -- first run, gets set up, second +  it will just return (singleton)
   return logger;
 }
 
