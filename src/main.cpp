@@ -5,5 +5,5 @@ using namespace std;
 int main()
 {
   Logger logger = getLogger();
-  logger.log("Detector","test msg", Logger::Levels::INFO);
+  logger.log("Detector","test msg", Levels::INFO);
 }

@@ -10,7 +10,7 @@ using namespace std;
 string file = "";
 bool console = true;
 bool is_init = false;
-Logger::Levels severity = Logger::Levels::INFO;
+Levels severity = Levels::INFO;
 
 Logger::Logger(bool console, string file)
   :console(console)
@@ -47,19 +47,19 @@ Logger::Logger(bool console, string file)
       auto filter_severity = boost::log::trivial::trace;
       switch (Logger::severity)
       {
-        case Logger::Levels::DEBUG:
+        case Levels::DEBUG:
           filter_severity = boost::log::trivial::debug;
           break;
-        case Logger::Levels::INFO:
+        case Levels::INFO:
           filter_severity = boost::log::trivial::info;
           break;
-        case Logger::Levels::WARNING:
+        case Levels::WARNING:
           filter_severity = boost::log::trivial::warning;
           break;
-        case Logger::Levels::ERROR:
+        case Levels::ERROR:
           filter_severity = boost::log::trivial::error;
           break;
-        case Logger::Levels::FATAL:
+        case Levels::FATAL:
           filter_severity = boost::log::trivial::fatal;
           break;
       }
@@ -70,25 +70,25 @@ Logger::Logger(bool console, string file)
 
 }
 
-void Logger::log(string src, string msg, Logger::Levels severity)
+void Logger::log(string src, string msg, Levels severity)
 {
   auto IO = BOOST_LOG_TRIVIAL(trace);
 
   switch(severity)
   {
-    case Logger::Levels::DEBUG:
+    case Levels::DEBUG:
       IO = BOOST_LOG_TRIVIAL(debug);
       break;
-    case Logger::Levels::INFO:
+    case Levels::INFO:
       IO = BOOST_LOG_TRIVIAL(info);
       break;
-    case Logger::Levels::WARNING:
+    case Levels::WARNING:
       IO = BOOST_LOG_TRIVIAL(warning);
       break;
-    case Logger::Levels::ERROR:
+    case Levels::ERROR:
       IO = BOOST_LOG_TRIVIAL(error);
       break;
-    case Logger::Levels::FATAL:
+    case Levels::FATAL:
       IO = BOOST_LOG_TRIVIAL(fatal);
       break;
 
@@ -106,7 +106,7 @@ Logger Logger::getLogger()
   return logger;
 }
 
-void Logger::init(bool console, string file, Logger::Levels severity)
+void Logger::init(bool console, string file, Levels severity)
 {
   if (!is_init)
   {

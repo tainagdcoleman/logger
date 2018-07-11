@@ -2,6 +2,8 @@
 #include "boost/log/trivial.hpp"
 
 
+enum Levels{TRACE, DEBUG, INFO, WARNING, ERROR, FATAL};
+
 using namespace std;
 class Logger
 {
@@ -16,7 +18,6 @@ private:
     void operator=(Logger const&);
 
 public:
-  static enum Levels{TRACE, DEBUG, INFO, WARNING, ERROR, FATAL};
   void log(string src, string msg, Logger::Levels severity);
   static Logger getLogger();
   static void init(bool console, string file, string severity);
