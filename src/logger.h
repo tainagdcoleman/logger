@@ -11,14 +11,14 @@ private:
     static string file;
     static bool console;
     static bool is_init;
-    static Logger::Levels severity;
+    static Levels severity;
 
     Logger(bool console, string file);
     Logger(Logger const&);
     void operator=(Logger const&);
 
 public:
-  void log(string src, string msg, Logger::Levels severity);
+  void log(string src, string msg, Levels severity);
   static Logger getLogger();
   static void init(bool console, string file, string severity);
 
