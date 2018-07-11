@@ -63,14 +63,14 @@ Logger::Logger()
       }
 
       boost::log::core::get()->set_filter(
-          boost::log::trivial::severity >= filter_severity;
+          boost::log::trivial::severity >= filter_severity
       );
 
 }
 
 void Logger::log(string src, string msg, Levels severity)
 {
-  string message = string("From " + src + ", " + msg)
+  string message = string("From " + src + ", " + msg);
   switch(severity)
   {
     case Levels::TRACE:
