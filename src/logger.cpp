@@ -7,10 +7,10 @@
 using namespace std;
 
 
-string file = "";
-bool console = true;
-bool is_init = false;
-Levels severity = Levels::INFO;
+string Logger::file = "";
+bool Logger::console = true;
+bool Logger::is_init = false;
+Levels Logger::severity = Levels::INFO;
 
 Logger::Logger()
 {
