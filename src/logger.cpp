@@ -12,15 +12,13 @@ bool console = true;
 bool is_init = false;
 Levels severity = Levels::INFO;
 
-Logger::Logger(bool console, string file)
-  :console(console)
-  ,file(file)
+Logger::Logger()
 {
       static const string COMMON_FMT("[%TimeStamp%][%Severity%]:  %Message%");
 
       boost::log::register_simple_formatter_factory< boost::log::trivial::severity_level, char >("Severity");
 
-      if(console)
+      if(Logger::console)
       {
         // Output message to console
         boost::log::add_console_log(
@@ -29,7 +27,7 @@ Logger::Logger(bool console, string file)
             boost::log::keywords::auto_flush = true
         );
       }
-      if(file != "")
+      if(Logger::file != "")
       {
       // Output message to file, rotates when file reached 1mb or at midnight every day. Each log file
       // is capped at 1mb and total is 20mb

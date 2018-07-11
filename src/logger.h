@@ -13,7 +13,7 @@ private:
     static bool is_init;
     static Levels severity;
 
-    Logger(bool console, string file);
+    Logger();
     Logger(Logger const&);
     void operator=(Logger const&);
 
