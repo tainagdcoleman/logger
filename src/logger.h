@@ -25,4 +25,4 @@ public:
   Logger(Logger const&) = delete;
   void operator=(Logger const&) = delete;
 
-}
+};
