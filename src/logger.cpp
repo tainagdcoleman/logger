@@ -6,6 +6,12 @@
 
 using namespace std;
 
+
+string file = "";
+bool console = true;
+bool is_init = false;
+Logger::Levels severity = Logger::Levels::INFO;
+
 Logger::Logger(bool console, string file)
   :console(console)
   ,file(file)
@@ -38,8 +44,28 @@ Logger::Logger(bool console, string file)
       }
       boost::log::add_common_attributes();
 
+      auto filter_severity = boost::log::trivial::trace;
+      switch (Logger::severity)
+      {
+        case Logger::Levels::DEBUG:
+          filter_severity = boost::log::trivial::debug;
+          break;
+        case Logger::Levels::INFO:
+          filter_severity = boost::log::trivial::info;
+          break;
+        case Logger::Levels::WARNING:
+          filter_severity = boost::log::trivial::warning;
+          break;
+        case Logger::Levels::ERROR:
+          filter_severity = boost::log::trivial::error;
+          break;
+        case Logger::Levels::FATAL:
+          filter_severity = boost::log::trivial::fatal;
+          break;
+      }
+
       boost::log::core::get()->set_filter(
-          boost::log::trivial::severity >= Logger::severity;
+          boost::log::trivial::severity >= filter_severity;
       );
 
 }
@@ -86,28 +112,7 @@ void Logger::init(bool console, string file, Logger::Levels severity)
   {
     Logger::console = console;
     Logger::file = file;
-
-    switch (severity)
-    {
-      case Logger::Levels::TRACE:
-        Logger::severity = boost::log::trivial::trace;
-        break;
-      case Logger::Levels::DEBUG:
-        Logger::severity = boost::log::trivial::debug;
-        break;
-      case Logger::Levels::INFO:
-        Logger::severity = boost::log::trivial::info;
-        break;
-      case Logger::Levels::WARNING:
-        Logger::severity = boost::log::trivial::warning;
-        break;
-      case Logger::Levels::ERROR:
-        Logger::severity = boost::log::trivial::error;
-        break;
-      case Logger::Levels::FATAL:
-        Logger::severity = boost::log::trivial::fatal;
-        break;
-    }
+    Logger::severity = severity;
 
   }
 }

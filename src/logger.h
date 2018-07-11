@@ -6,10 +6,10 @@ using namespace std;
 class Logger
 {
 private:
-    static string file = "";
-    static bool console = true;
-    static bool is_init = false;
-    static auto severity = boost::log::trivial::info;
+    static string file;
+    static bool console;
+    static bool is_init;
+    static Logger::Levels severity;
 
     Logger(bool console, string file);
     Logger(Logger const&);
