@@ -20,7 +20,7 @@ private:
 public:
   void log(string src, string msg, Levels severity);
   static Logger getLogger();
-  static void init(bool console, string file, string severity);
+  static void init(bool console, string file, Levels severity);
 
   //Logger(Logger const&) = delete;
   //void operator=(Logger const&) = delete;
