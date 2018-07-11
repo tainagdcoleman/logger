@@ -14,8 +14,8 @@ private:
     static Levels severity;
 
     Logger();
-    Logger(Logger const&);
-    void operator=(Logger const&);
+    // Logger(Logger const&);
+    // void operator=(Logger const&);
 
 public:
   void log(string src, string msg, Levels severity);
