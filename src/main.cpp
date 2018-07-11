@@ -4,6 +4,6 @@ using namespace std;
 
 int main()
 {
-  Logger logger = getLogger();
+  Logger logger = Logger::getLogger();
   logger.log("Detector","test msg", Levels::INFO);
 }
