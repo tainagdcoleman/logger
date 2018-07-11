@@ -17,7 +17,7 @@ private:
 
 public:
   static enum Levels{TRACE, DEBUG, INFO, WARNING, ERROR, FATAL};
-  void log(string msg, string severity);
+  void log(string src, string msg, string severity);
   static Logger getLogger();
   static void init(bool console, string file, string severity);
 
