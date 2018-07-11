@@ -14,35 +14,63 @@ Logger::Logger(bool console, string file)
 
       boost::log::register_simple_formatter_factory< boost::log::trivial::severity_level, char >("Severity");
 
-      // Output message to console
-      boost::log::add_console_log(
-          std::cout,
-          boost::log::keywords::format = COMMON_FMT,
-          boost::log::keywords::auto_flush = true
-      );
-
+      if(console)
+      {
+        // Output message to console
+        boost::log::add_console_log(
+            std::cout,
+            boost::log::keywords::format = COMMON_FMT,
+            boost::log::keywords::auto_flush = true
+        );
+      }
+      if(file != "")
+      {
       // Output message to file, rotates when file reached 1mb or at midnight every day. Each log file
       // is capped at 1mb and total is 20mb
-      boost::log::add_file_log (
-          boost::log::keywords::file_name = "sample_%3N.log",
-          boost::log::keywords::rotation_size = 1 * 1024 * 1024,
-          boost::log::keywords::max_size = 20 * 1024 * 1024,
-          boost::log::keywords::time_based_rotation = boost::log::sinks::file::rotation_at_time_point(0, 0, 0),
-          boost::log::keywords::format = COMMON_FMT,
-          boost::log::keywords::auto_flush = true
-      );
-
+        boost::log::add_file_log (
+            boost::log::keywords::file_name = file,
+            boost::log::keywords::rotation_size = 1 * 1024 * 1024,
+            boost::log::keywords::max_size = 20 * 1024 * 1024,
+            boost::log::keywords::time_based_rotation = boost::log::sinks::file::rotation_at_time_point(0, 0, 0),
+            boost::log::keywords::format = COMMON_FMT,
+            boost::log::keywords::auto_flush = true
+        );
+      }
       boost::log::add_common_attributes();
 
-      // Only output message with INFO or higher severity in Release
-  #ifndef _DEBUG
       boost::log::core::get()->set_filter(
-          boost::log::trivial::severity >= boost::log::trivial::info
+          boost::log::trivial::severity >= Logger::severity;
       );
-  #endif
 
 }
 
+void Logger::log(string src, string msg, Logger::Levels severity)
+{
+  auto IO = BOOST_LOG_TRIVIAL(trace);
+
+  switch(severity)
+  {
+    case Logger::Levels::DEBUG:
+      IO = BOOST_LOG_TRIVIAL(debug);
+      break;
+    case Logger::Levels::INFO:
+      IO = BOOST_LOG_TRIVIAL(info);
+      break;
+    case Logger::Levels::WARNING:
+      IO = BOOST_LOG_TRIVIAL(warning);
+      break;
+    case Logger::Levels::ERROR:
+      IO = BOOST_LOG_TRIVIAL(error);
+      break;
+    case Logger::Levels::FATAL:
+      IO = BOOST_LOG_TRIVIAL(fatal);
+      break;
+
+  }
+
+  IO << "From " << src << ", " << msg;
+
+}
 //static methods
 
 Logger Logger::getLogger()
