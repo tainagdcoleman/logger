@@ -2,6 +2,7 @@
 #include <string>
 #include "boost/log/trivial.hpp"
 #include "boost/log/utility/setup.hpp"
+#include <vector>
 
 
 using namespace std;
@@ -14,7 +15,7 @@ Levels Logger::severity = Levels::INFO;
 
 Logger::Logger()
 {
-      static const string COMMON_FMT("[%TimeStamp%][%Severity%]:  %Message%");
+      static const string COMMON_FMT("[%TimeStamp%][%Severity%]%Message%");
 
       boost::log::register_simple_formatter_factory< boost::log::trivial::severity_level, char >("Severity");
 
@@ -67,10 +68,30 @@ Logger::Logger()
       );
 
 }
-
-void Logger::log(string src, string msg, Levels severity)
+string Logger::append_tag(vector<string> tags)
 {
-  string message = string("From " + src + ", " + msg);
+  ostringstream ss;
+  ss << '[';
+  bool first = true;
+  for (string const & element : tags) {
+      if (!first) {
+          ss << ", ";
+      }
+      ss << element;
+      first = false;
+  }
+  ss << ']';
+  return ss.str();
+}
+
+void Logger::log(string src, string msg, Levels severity, const vector<string> &tags)
+{
+  string message;
+  if (tags.empty())
+    message = string("[source:" + src + "][message:" + msg + "]");
+  else
+    message = string("[source:" + src + "][message:" + msg + "][tag:" + append_tag(tags) + "]");
+
   switch(severity)
   {
     case Levels::TRACE:
